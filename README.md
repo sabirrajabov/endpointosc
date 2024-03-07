@@ -1,20 +1,31 @@
 
-# About
+# About 
 
 EndpointOSC is a simple but powerful endpoint checker tool. It basically checks the given endpoints and alerts when error occured. Also it integrated with Telegram API that tool can send error alerts via Telegram Bot.
 
+# Release Notes of v2.0
 
+- Code and performance optimizations
+- Custom expect situations for endpoints
+- Reminder interval removed (It can be add in future releases)
 # Usage
+
+Run the tool:
 
 ```bash
 endpointosc
 ```
-With custom configuration file
+With custom configuration file:
 
 ```bash
 endpointosc -f /path/to/file
 ```
 
+Shows current version:
+
+```bash
+endpointosc --version
+```
 # Requirments
 
  - Python 3.9 or above
@@ -23,26 +34,50 @@ endpointosc -f /path/to/file
 
 
 
+# Update from v1.0
+
+
+- In Debian-based distibution:
+
+    `sudo su` or `su - root`
+
+    `cd ./endpointosc-2.0-debian/ && ./update.sh`
+
+- For redhat-based distibutions:
+
+    `sudo su` or `su - root`
+
+    `cd ./endpointosc-2.0-redhat/ && ./update.sh`
+
+
+
+    
 # Installation
 
 - Pre installation:
     `apt|yum|pkg  install python3-dev python3-pip`
 
-- In Debian-based distibution, you can simply install the `.deb` package by running:
+- In Debian-based distibution:
 
-    `dpkg -i endpointosc-1.0.deb`
+    `sudo su` or `su - root`
 
-- For other distibutions:
+    `cd ./endpointosc-2.0-debian/ && ./install.sh`
 
-    `mv ./usr/bin/endpointosc /usr/bin/endpointosc && chmod +x /usr/bin/endpointosc`
+- For redhat-based distibutions:
+
+    `sudo su` or `su - root`
+
+    `cd ./endpointosc-2.0-redhat/ && ./install.sh`
 
 - Post installation (Optional)
 
     Create service file for command
         
-        Example service file:
+    - Example service file:
 
-        `[Unit]
+        ```
+
+         [Unit]
          Description=EndpointOSC Tool
          After=network.target
 
@@ -56,7 +91,9 @@ endpointosc -f /path/to/file
 
          [Install]
          WantedBy=multi-user.target
-            `
+
+         ```
+            
 
 
     
@@ -70,18 +107,30 @@ Example config:
 
 ```
 endpoints:
-  facebook: https://facebook.com
-  google: https://google.com
+  endpoint1:
+    expected: 200
+    url: http://localhost/200
+  endpoint2:
+    expected: 401
+    url: http://localhost/404
 general:
   interval: 5
   log_file: /var/log/endpointosc/endpointosc.log
   log_level: info
-  reminder_interval: 60
 telegram:
   bot_token: 0
   chat_id: 0
   enabled: 0
 ```
+
+
+- "Endpoints" block
+
+    - endpoint_name:
+
+        - url: url of the endpoint
+        - expected: status code of endpoint considered working (different than      considered as error)
+
 
 
 - "General" block
@@ -92,7 +141,6 @@ telegram:
 
         - info - Both error and info logs
         - error  - Only error messages
-    - **reminder_interval** - Inter of checking the endpoint that unavaliable.
 
 
 - "Telegram" block
