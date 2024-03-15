@@ -79,7 +79,7 @@ configuration_check(){
 install(){
 
         cp ./usr/bin/endpointosc /usr/bin/endpointosc
-        chown 755 /usr/bin/endpointosc
+        chmod 755 /usr/bin/endpointosc
         if [ $? -eq 0 ]; then
             echo "SUCCESS: Endpointosc installed successfully"
             endpointosc_path=$(which endpointosc)
